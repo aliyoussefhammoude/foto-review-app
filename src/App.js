@@ -1,7 +1,7 @@
-import { logRoles } from "@testing-library/react";
+//import { logRoles } from "@testing-library/react";
 import React from "react";
 import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
-import logo from "./assets/images/logos.svg";
+import logo from "./assets/images/logo.svg";
 import "./assets/scss/app.scss";
 
 const App = () => {
