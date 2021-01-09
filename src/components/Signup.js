@@ -1,15 +1,17 @@
-import React, {useContext, useRef, useState} from "react"
+import React, {useRef, useState} from "react"
 import {Row, Col, Form, Button, Card, Alert} from "react-bootstrap"
 import {FormGroup} from "react-bootstrap"
 import {Link, useNavigate} from "react-router-dom"
-import {AuthContext} from "../contexts/AuthContext"
+import {useAuth} from "../contexts/AuthContext"
 
 const Signup = () => {
     const emailRef = useRef()
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
     const [error, setError] = useState(null)
-    const {signup} = useContext(AuthContext)
+    const [loading, setLoading] = useState(false)
+    const {signup} = useAuth()
+    const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -20,10 +22,13 @@ const Signup = () => {
         setError(null)
 
         try {
-            //try login
-            signup(emailRef.current.value, passwordRef.current.value)
+            //try sign up
+            setLoading(true)
+            await signup(emailRef.current.value, passwordRef.current.value)
+            navigate("/")
         } catch {
             setError(e.message)
+            setLoading(false)
         }
     }
 
@@ -51,7 +56,9 @@ const Signup = () => {
                                     <Form.Control type="password" ref={passwordConfirmRef} required />
                                 </FormGroup>
 
-                                <Button type="sumbit">Create Account</Button>
+                                <Button disabled={loading} type="sumbit">
+                                    Create Account
+                                </Button>
                             </Form>
                         </Card.Body>
                     </Card>
