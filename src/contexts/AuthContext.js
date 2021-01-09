@@ -1,6 +1,6 @@
 import {createContext, useEffect, useState, useContext} from "react"
 import {auth} from "../firebase"
-import {ClipLoader} from "react-spinners"
+import {RotateLoader} from "react-spinners"
 
 const AuthContext = createContext()
 
@@ -37,7 +37,7 @@ const AuthContextProvider = (props) => {
         <AuthContext.Provider value={contextValues}>
             {loading && (
                 <div className="d-flex justify-content-center my-5">
-                    <ClipLoader color={"#888"} size={70} />
+                    <RotateLoader color={"#888"} size={20} />
                 </div>
             )}
             {!loading && props.children}
