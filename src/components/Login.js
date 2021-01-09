@@ -1,8 +1,8 @@
-import React, {useRef, useState} from "react"
-import {Row, Col, Form, Button, Card, Alert} from "react-bootstrap"
-import {FormGroup} from "react-bootstrap"
-import {Link, useNavigate} from "react-router-dom"
-import {useAuth} from "../contexts/AuthContext"
+import React, {useRef, useState} from 'react'
+import {Row, Col, Form, Button, Card, Alert} from 'react-bootstrap'
+import {FormGroup} from 'react-bootstrap'
+import {Link, useNavigate} from 'react-router-dom'
+import {useAuth} from '../contexts/AuthContext'
 
 const Login = () => {
     const emailRef = useRef()
@@ -21,9 +21,9 @@ const Login = () => {
             //try log in
             setLoading(true)
             await login(emailRef.current.value, passwordRef.current.value)
-            navigate("/")
-        } catch {
-            setError(e.message)
+            navigate('/')
+        } catch (e) {
+            setError("couldn't log in, please check your email and password.")
             setLoading(false)
         }
     }
@@ -36,7 +36,7 @@ const Login = () => {
                         <Card.Body>
                             <Card.Title>Log in</Card.Title>
 
-                            {error && <Alert variant="danger">{error}</Alert>}
+                            {error && (<Alert variant="danger">{error}</Alert>)}
 
                             <Form onSubmit={handleSubmit}>
                                 <FormGroup id="email">
