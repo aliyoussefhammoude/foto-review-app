@@ -1,5 +1,6 @@
 import {createContext, useEffect, useState, useContext} from "react"
 import {auth} from "../firebase"
+import {ClipLoader} from "react-spinners"
 
 const AuthContext = createContext()
 
@@ -19,7 +20,6 @@ const AuthContextProvider = (props) => {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
             // auth state changed by a user by either log in or log out.
-            console.log("Auth state changed", user)
             setCurrentUser(user)
             setLoading(false)
         })
@@ -35,7 +35,11 @@ const AuthContextProvider = (props) => {
 
     return (
         <AuthContext.Provider value={contextValues}>
-            {loading && <p>Loading...</p>}
+            {loading && (
+                <div className="d-flex justify-content-center my-5">
+                    <ClipLoader color={"#888"} size={70} />
+                </div>
+            )}
             {!loading && props.children}
         </AuthContext.Provider>
     )
