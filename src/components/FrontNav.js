@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React from "react";
 import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import logo from "../assets/images/logo.svg";
 
 const FrontNav = () => {
@@ -8,17 +9,18 @@ const FrontNav = () => {
         <div>
             <Navbar bg="dark" variant="dark">
                 <Container>
-                    <Navbar.Brand href="/">
-                        <img
-                            alt="A photo album"
-                            src={logo}
-                            width="30"
-                            height="30"
-                            className="d-inline-block align-top"
-                        />{" "}
-                        Foto Review
-                    </Navbar.Brand>
-
+                    <Link to="/">
+                        <Navbar.Brand>
+                            <img
+                                alt="A photo album"
+                                src={logo}
+                                width="30"
+                                height="30"
+                                className="d-inline-block align-top"
+                            />{" "}
+                            Foto Review
+                        </Navbar.Brand>
+                    </Link>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="ml-auto">
