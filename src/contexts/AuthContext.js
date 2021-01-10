@@ -20,6 +20,10 @@ const AuthContextProvider = (props) => {
         return auth.signOut()
     }
 
+    const resetPassword = (email) => {
+        return auth.sendPasswordResetEmail(email)
+    }
+
     const signup = (email, password) => {
         //sign user up
         return auth.createUserWithEmailAndPassword(email, password)
@@ -40,6 +44,7 @@ const AuthContextProvider = (props) => {
         loading,
         login,
         logout,
+        resetPassword,
         signup,
     }
 
