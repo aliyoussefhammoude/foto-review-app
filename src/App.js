@@ -10,6 +10,7 @@ import Logout from "./components/Logout"
 import FrontNav from "./components/FrontNav"
 import NotFound from "./components/NotFound"
 import Signup from "./components/Signup"
+import UpdateProfile from './components/UpdateProfile'
 import AuthContextProvider from "./contexts/AuthContext"
 import "./assets/scss/app.scss"
 
@@ -36,6 +37,9 @@ const App = () => {
                         <Route path="/signup">
                             <Signup />
                         </Route>
+                        <AuthRoute path="/update-profile">
+								<UpdateProfile />
+						</AuthRoute>
                         <Route path="*" element={<NotFound />} />
                     </Routes>
                 </Container>

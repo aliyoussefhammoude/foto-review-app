@@ -13,12 +13,10 @@ const FrontNav = () => {
         <div>
             <Navbar bg="bright" variant="bright">
                 <Container>
-                    <Link to="/" className="navbar-band">
+                    <Link to="/" className="navbar-band" style={{ color: '#000', textDecoration: 'none'}}>
                         <img alt="A photo album" src={logo} width="50" height="50" className="d-inline-block align-top" />
-                    </Link>{" "}
-                    <h4>
-                        <br></br>Foto review
-                    </h4>
+                        <h5 className="mb-0">Foto review</h5>
+                    </Link>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="ml-auto">
@@ -26,10 +24,8 @@ const FrontNav = () => {
                                 Albums
                             </NavLink>
                             {currentUser ? (
-                                <NavDropdown title={currentUser.email} id="basic-nav-dropdown">
-                                    <NavLink to="/my-profile" className="dropdown-item">
-                                        My profile
-                                    </NavLink>
+                                <NavDropdown title={ <strong style={{ color: '#000' }}>{currentUser.displayName}</strong> } id="basic-nav-dropdown">
+                                    <NavLink to="/update-profile" className="dropdown-item">Update Profile</NavLink>
                                     <NavDropdown.Divider />
                                     <NavLink to="/logout" className="dropdown-item">
                                         Logout
@@ -44,6 +40,7 @@ const FrontNav = () => {
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
+            <hr className="mt-0" color={"#888"}></hr>
         </div>
     )
 }
