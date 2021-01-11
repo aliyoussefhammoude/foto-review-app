@@ -28,8 +28,10 @@ const AuthContextProvider = (props) => {
         //sign user up
         return auth.createUserWithEmailAndPassword(email, password)
     }
-    const updateEmail = (email) => {
-		return currentUser.updateEmail(email)
+    const updateEmail = (name) => {
+		return currentUser.updateEmail({
+			displayName: name
+		})
 	}
 
 	const updatePassword = (password) => {

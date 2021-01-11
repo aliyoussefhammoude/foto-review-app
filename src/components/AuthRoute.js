@@ -5,7 +5,10 @@ import {useAuth} from "../contexts/AuthContext"
 const AuthRoute = (props) => {
     const {currentUser} = useAuth()
 
-    return currentUser ? <Route {...props} /> : <Navigate to="/login" />
+    return  (
+                currentUser 
+                ? (<Route {...props} />) : (<Navigate to="/login" />)
+            )
 }
 
 export default AuthRoute
