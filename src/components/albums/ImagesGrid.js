@@ -18,10 +18,12 @@ const ImagesGrid = ({ images }) => {
 
 	return (
 		<SRLWrapper>
+			<p>Select all images you want and click on ''DONE'' to create an album with the images you've chosen</p>
 			<Row className="my-3">
 				{images.map(image => (
 					<Col sm={6} md={4} lg={3} key={image.id}>
 						<Card className="mb-3">
+							<input type="checkbox" className="mb-2 mt-2 ml-1"></input>
 							<a href={image.url} title="View image in lightbox" data-attribute="SRL">
 								<Card.Img variant="top" src={image.url} title={image.name} />
 							</a>
@@ -37,6 +39,7 @@ const ImagesGrid = ({ images }) => {
 											Delete
 										</Button>
 									)
+									
 								}
 							</Card.Body>
 						</Card>
