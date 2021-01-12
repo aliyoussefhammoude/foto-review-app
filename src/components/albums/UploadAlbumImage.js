@@ -95,7 +95,7 @@ const UploadAlbumImage = ({ albumId }) => {
 			{message && (<Alert variant={message.error ? 'warning' : 'success'}>{message.text}</Alert>)}
 			
 		</div>
-		<p>Wanna change the album title? Just update the name down here and press enter</p>
+		<p>Wanna change the name of this album? Just update the name down here and press enter</p>
 			<Form onSubmit={handleSubmit}>
 				<Form.Group>
 					<Form.Control onChange={handleTitleChange} />

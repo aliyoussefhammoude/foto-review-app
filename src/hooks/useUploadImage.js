@@ -45,6 +45,7 @@ const useUploadImage = (image, albumId = null) => {
 
 			// add uploaded file to db
 			const img = {
+				check: false,
 				name: image.name,
 				owner: currentUser.uid,
 				path: snapshot.ref.fullPath,
