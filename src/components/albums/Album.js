@@ -11,8 +11,8 @@ import { FormControl, FormLabel, Input } from "@chakra-ui/react"
 
 const Album = () => {
 	const [constumer, setCostumer] = useState(null)
-	const [editAlbumTitle, setEditAlbumTitle] = useState(null)
-	const [newTitle, setNewTitle] = useState(null)
+	const [albumTitleChange, setalbumTitleChange] = useState(null)
+	const [createTitle, setcreateTitle] = useState(null)
 	const [, setErrorMsg] = useState(false)
 	const { albumId } = useParams()
 	const { album } = useAlbum(albumId)
@@ -22,32 +22,24 @@ const Album = () => {
         setCostumer(`${window.location.href}/*`);
 	};
 
-	const handleTitleChange = (e) => {
-		setNewTitle(e.target.value)
+	const handleAlbumEditChange = () =>{
+		setalbumTitleChange(true)
 	}
 
-	const handleEditAlbumTitle = () =>{
-		setEditAlbumTitle(true)
+	const handleAlbumTitleChange = (e) => {
+		setcreateTitle(e.target.value)
 	}
 
-	const saveEditAlbumTitle = async (e) =>{
-		console.log('new album title', newTitle)
-		if(newTitle.length < 3 ) {
-			console.log('to short')
-			return(
-				setErrorMsg(true)
-			)
-		}
-		setErrorMsg(false)
+	const EditedTitel = async (e) =>{
 		try {
 			await db.collection('albums').doc(album.id).update({
-				title: newTitle,
+				title: createTitle,
 			});
 
 		} catch (e) {
-			console.log("Something went wrong and the title could not be updated. Please try again.")
+			console.log("try again.")
 		}
-		setEditAlbumTitle(false)
+		setalbumTitleChange(false)
 	}
 	
 
@@ -56,23 +48,23 @@ const Album = () => {
 			{album && currentUser &&
 					<>
 						{
-							editAlbumTitle  
+							albumTitleChange  
 								? 
 								<>
-									<FormControl onChange={handleTitleChange} id="first-name">
+									<FormControl onChange={handleAlbumTitleChange} id="first-name">
 										<div className="album-title">
 											<FormLabel>New Album Name</FormLabel>
 										</div>
 										<Input />
 									</FormControl>
-									<Button onClick={saveEditAlbumTitle}>Save</Button>
+									<Button onClick={EditedTitel}>Save</Button>
 								</>
 								
 								: 
 								
 								<div className="album-title">
 									<h2 className="mb-3">{album && album.title}</h2>
-									<Button onClick={handleEditAlbumTitle} className="editor-icon" >Edit album name</Button>
+									<Button onClick={handleAlbumEditChange} className="editor-icon" >Edit album name</Button>
 								</div>
 						}	
 						
@@ -89,12 +81,7 @@ const Album = () => {
 									>Customer Link
 								</Button>											
 							</div>
-						}	
-
-						{
-							constumer && 
-							<p>{constumer}</p>
-						}		
+						}{constumer && <p>{constumer}</p>}		
 					</>
 			}		
 		</>

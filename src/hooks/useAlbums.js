@@ -4,16 +4,13 @@ import { useAuth } from '../contexts/RouteAuth'
 
 const useAlbums = () => {
 
-	// States
 	const [albums, setAlbums] = useState([])
 	const [loading, setLoading] = useState(true)
 
-	// Contexts
 	const { currentUser } = useAuth()
 
-	// Effects
 	useEffect(() => {
-		const unmount = db.collection('albums')
+		const unSigned = db.collection('albums')
 			.where('owner', '==', currentUser.uid).onSnapshot(snapshot => {
 				setLoading(true)
 				const renderSnapAlbums = []
@@ -29,7 +26,7 @@ const useAlbums = () => {
 			setLoading(false)
 		})
 
-		return unmount
+		return unSigned
 	}, [])
 
 	return { albums, loading }

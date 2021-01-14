@@ -1,68 +1,53 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
 import { Row, Col, Card, Button } from 'react-bootstrap'
-import { SRLWrapper } from 'simple-react-lightbox'
+import { useNavigate } from 'react-router-dom'
 import useImageChecked from '../../hooks/useImageChecked';
 import ImagesReviewed from './ImagesReviewed'
+import { SRLWrapper } from 'simple-react-lightbox'
 
 const CheckCustomerImages = ({ images, owner, title }) => {
 
-	// States
-	const [likedImages, setLikedImages] = useState([])
-	const [dislikedImages, setDislikedImages] = useState([])
-	const [dislikedCheckedImage, setDislikedCheckedImage] = useState({})
-	const [likedCheckedImages, setLikedCheckedImages] = useState({})
-	const [newImageArray, setNewImageArray] = useState(null)
+	const [ArrayImg, setArrayImg] = useState(null)
 	const [errorText, setErrorText] = useState(false)
-	const [reviewSelected, setReviewSelected] = useState(false)
+	const [CheckedReview, setCheckedReview] = useState(false)
 
-	// Hooks
-	const { selectedError, selectedSuccess } = useImageChecked(newImageArray, owner, title);
+	const [ImagesPositive, setImagesPositive] = useState([])
+	const [ImagesNegative, setImagesNegative] = useState([])
+
+	const { selectedError, selectedSuccess } = useImageChecked(ArrayImg, owner, title);
+
+	const [ImagesNegativeChecked, setImagesNegativeChecked] = useState({})
+	const [ImagesPositiveChecked, setImagesPositiveChecked] = useState({})
 	const navigate = useNavigate()
 
-	// Effects
 	useEffect(() => {
 		if (selectedError) {
-			setErrorText("Unexpected error, could not upload and create new album.")
+			setErrorText("didnt create new album")
 		} else if (selectedSuccess) {
-			setNewImageArray(null);
+			setArrayImg(null);
 			navigate('/')
 		} 
 	}, [selectedError, selectedSuccess]);
 
-	// GENERAL FUNCTIONS -->
 
-	// Handling all the checked boxed and storing in new array
-	const handleLikedCheckedImage = (e) => {
-	
-		setLikedCheckedImages({...likedCheckedImages, [e.target.name] : e.target.checked })
-	
-		if (likedImages.includes(e.target.name)) {
-			for (let i = 0; i < likedImages.length; i++){     
-				likedImages[i] === e.target.name && likedImages.splice(i, 1) 			
-			}
-		} else {
-			likedImages.push(e.target.name)
-		}
-		setLikedImages(likedImages);
+	const handleReview = () => {
+		setCheckedReview(!CheckedReview)
 	}
 		
-	// Handling all the checked boxed and storing in new array
-	const handleDislikedCheckedImage = (e) => {
+	const handleNegativeImages = (e) => {
 		
-		setDislikedCheckedImage({...dislikedCheckedImage, [e.target.name] : e.target.checked })
+		setImagesNegativeChecked({...ImagesNegativeChecked, [e.target.name] : e.target.checked })
 	
-		if (dislikedImages.includes(e.target.name)) {
-			for (let i = 0; i < dislikedImages.length; i++){     
-				dislikedImages[i] === e.target.name && dislikedImages.splice(i, 1) 			
+		if (ImagesNegative.includes(e.target.name)) {
+			for (let i = 0; i < ImagesNegative.length; i++){     
+				ImagesNegative[i] === e.target.name && ImagesNegative.splice(i, 1) 			
 			}
 		} else {
-			dislikedImages.push(e.target.name)
+			ImagesNegative.push(e.target.name)
 		}
-		setDislikedImages(dislikedImages);
+		setImagesNegative(ImagesNegative);
 	}
 
-	// Create new album based on rated pictures
 	const creatAlbum = (checkedImages) => {
 		let imagesToSave = []
 
@@ -72,18 +57,29 @@ const CheckCustomerImages = ({ images, owner, title }) => {
 			}
 		})
 
-		setNewImageArray(imagesToSave)
+		setArrayImg(imagesToSave)
 	}
 
-	const handleReview = () => {
-		setReviewSelected(!reviewSelected)
+
+	const handlePositiveImageCheck = (e) => {
+	
+		setImagesPositiveChecked({...ImagesPositiveChecked, [e.target.name] : e.target.checked })
+	
+		if (ImagesPositive.includes(e.target.name)) {
+			for (let i = 0; i < ImagesPositive.length; i++){     
+				ImagesPositive[i] === e.target.name && ImagesPositive.splice(i, 1) 			
+			}
+		} else {
+			ImagesPositive.push(e.target.name)
+		}
+		setImagesPositive(ImagesPositive);
 	}
 
 	return (
 		<SRLWrapper>
 		<p>{errorText}</p>
 		{
-			!reviewSelected
+			!CheckedReview
 			 ? (
 				<>
 					<Row className="my-3">
@@ -102,8 +98,8 @@ const CheckCustomerImages = ({ images, owner, title }) => {
 											<input
 												type="checkbox"
 												name={image.url}
-												checked={likedCheckedImages[image.url]}
-												onChange={handleLikedCheckedImage}
+												checked={ImagesPositiveChecked[image.url]}
+												onChange={handlePositiveImageCheck}
 											/>
 										</label>
 										
@@ -112,8 +108,8 @@ const CheckCustomerImages = ({ images, owner, title }) => {
 										<input
 											type="checkbox"
 											name={image.url}
-											checked={dislikedCheckedImage[image.url]}
-											onChange={handleDislikedCheckedImage}
+											checked={ImagesNegativeChecked[image.url]}
+											onChange={handleNegativeImages}
 										/>
 
 									</Card.Body>
@@ -122,8 +118,9 @@ const CheckCustomerImages = ({ images, owner, title }) => {
 						))}
 					</Row>
 					
-						{images.length <= likedImages.length + dislikedImages.length  &&
-							<Button onClick={handleReview}>
+						{images.length <= ImagesPositive.length + ImagesNegative.length  &&
+						
+							<Button onClick={handleReview}>{console.log(images)}
 								Review
 							</Button>
 						}
@@ -131,7 +128,7 @@ const CheckCustomerImages = ({ images, owner, title }) => {
 				</>
 			) : (
 				<ImagesReviewed
-				likedImages={likedImages} create={creatAlbum} goBack={handleReview} dislikedImages={dislikedImages}/>
+				likedImages={ImagesPositive} create={creatAlbum} goBack={handleReview} dislikedImages={ImagesNegative}/>
 			)
 		}
 			

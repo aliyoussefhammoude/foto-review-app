@@ -1,28 +1,25 @@
 import React, { useState, useEffect } from 'react'
+import useDeleteImage from '../../hooks/useDeleteImage'
+import useUploadImage from '../../hooks/useUploadImage';
 import { useNavigate } from 'react-router-dom'
 import { Row, Col, Card, Button } from 'react-bootstrap'
 import { SRLWrapper } from 'simple-react-lightbox'
 import { useAuth } from '../../contexts/RouteAuth'
-import useDeleteImage from '../../hooks/useDeleteImage'
-import useUploadImage from '../../hooks/useUploadImage';
 
 const ImageGrid = ({ images }) => {
 
-	// States
-	const [newImages, setNewImages] = useState([])
-	const [checkedImage, setCheckedImage] = useState({})
-	const [deleteImage, setDeleteImage] = useState(null);
 	const [newImageArray, setNewImageArray] = useState(null)
 	const [, setErrorText] = useState(false)
+
+	const [newPictures, setnewPictures] = useState([])
+	const [imageCheck, setimageCheck] = useState({})
+	const [deleteImage, setDeleteImage] = useState(null);
 	
-	// Hooks
 	const navigate = useNavigate()
 	const { error, isSuccess } = useUploadImage(newImageArray);
 
-	// Contexts
 	const { currentUser } = useAuth()
 
-	// Effects
 	useEffect(() => {
 		if (error) {
 			setErrorText("Unexpected error, could not upload and create new album.")
@@ -32,31 +29,11 @@ const ImageGrid = ({ images }) => {
 		} 
 	}, [error, isSuccess]);
 		
-	// GENERAL FUNCTIONS -->
-
-	// Delete picture/pictures
 	const handleDeleteImage = (image) => {
 		setDeleteImage(image);
 	}
 	useDeleteImage(deleteImage);
 
-
-	// Handling all the checked boxed and storing in new array
-	const handleCheckedImage = (e) => {
-		
-		setCheckedImage({...checkedImage, [e.target.name] : e.target.checked })
-		
-			if (newImages.includes(e.target.name)) {
-				for (let i = 0; i < newImages.length; i++){     
-					newImages[i] === e.target.name && newImages.splice(i, 1) 			
-				}
-			} else {
-				newImages.push(e.target.name)
-			}
-		setNewImages(newImages);
-	}
-
-	// Create new album based on picked pictures
 	const creatAlbum = (checkedImages) => {
 		let imagesToSave = []
 
@@ -67,6 +44,20 @@ const ImageGrid = ({ images }) => {
 		})
 
 		setNewImageArray(imagesToSave)
+	}
+
+	const handleimageCheck = (e) => {
+		
+		setimageCheck({...imageCheck, [e.target.name] : e.target.checked })
+		
+			if (newPictures.includes(e.target.name)) {
+				for (let i = 0; i < newPictures.length; i++){     
+					newPictures[i] === e.target.name && newPictures.splice(i, 1) 			
+				}
+			} else {
+				newPictures.push(e.target.name)
+			}
+		setnewPictures(newPictures);
 	}
 
 	return (
@@ -82,8 +73,8 @@ const ImageGrid = ({ images }) => {
 										className="mt-4"
 										type="checkbox"
 										name={image.url}
-										checked={checkedImage[image.url]}
-										onChange={handleCheckedImage}
+										checked={imageCheck[image.url]}
+										onChange={handleimageCheck}
 									/>
 								}
 							</a>
@@ -105,8 +96,8 @@ const ImageGrid = ({ images }) => {
 			</Row>
 			<Row>
 				<Col>
-					{currentUser && newImages && newImages.length > 0 &&		
-						<Button onClick={() => creatAlbum(newImages)}>
+					{currentUser && newPictures && newPictures.length > 0 &&		
+						<Button onClick={() => creatAlbum(newPictures)}>
 							Create an album with the images you have checked above
 						</Button>
 					}

@@ -6,14 +6,11 @@ import useUploadImage from '../../hooks/useUploadImage';
 
 const ImageUploader = ({ albumId }) => {
 
-	// States
-	const [uploadImage, setUploadImage] = useState(null);
+	const [imageUpload, setimageUpload] = useState(null);
 	const [message, setMessage] = useState(null);
 
-	// Hooks
-	const { uploadProgress, error, isSuccess } = useUploadImage(uploadImage, albumId);
+	const { uploadProgress, error, isSuccess } = useUploadImage(imageUpload, albumId);
 
-	// Effects
 	useEffect(() => {
 		if (error) {
 			setMessage({
@@ -26,7 +23,7 @@ const ImageUploader = ({ albumId }) => {
 				text: 'Image was correctly uploaded',
 			});
 			
-			setUploadImage(null);
+			setimageUpload(null);
 		} else {
 			setMessage(null);
 		}
@@ -39,7 +36,7 @@ const ImageUploader = ({ albumId }) => {
 			return;
 		}
 
-		setUploadImage(acceptedFiles);
+		setimageUpload(acceptedFiles);
 	}, []);
 
 	const { getInputProps, getRootProps, isDragAccept, isDragActive, isDragReject } = useDropzone({

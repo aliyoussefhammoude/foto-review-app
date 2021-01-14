@@ -2,21 +2,16 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/RouteAuth'
 
-const Login = (props) => {
+const Login = () => {
 
-    // States
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(false)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
-    // Hooks
     const navigate = useNavigate()
     const { login } = useAuth()
 
-    // GENERAL FUNCTIONS
-
-    // Handle the submitting of login
     const handleSubmit = async (e) => {
         e.preventDefault()
 
@@ -42,22 +37,9 @@ const Login = (props) => {
                     <h1>Log in to create albums to your photos!</h1>
 
                     <div className="inputFields">
-                        <input 
-                                type="text" 
-                                autoFocus 
-                                required 
-                                value={email} 
-                                onChange={(e) => setEmail(e.target.value)} 
-                                placeholder="Email..."
-                            /> 
+                        <input type="text" autoFocus required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email..."/> 
                             
-                            <input 
-                                type="password" 
-                                required 
-                                value={password} 
-                                onChange={(e) => setPassword(e.target.value)} 
-                                placeholder="Password..."
-                            /> 
+                            <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password..."/> 
                     </div>
                     
                     <div className="btnContainer">

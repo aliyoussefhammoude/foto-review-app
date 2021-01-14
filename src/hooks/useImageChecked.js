@@ -3,11 +3,9 @@ import { db } from '../firebase/firebase'
 
 const useImageChecked = (images, owner, title) => {
 
-	// States
     const [selectedError, setSelectedError] = useState(false)
     const [selectedSuccess, setSelectedSuccess] = useState(false)
 
-	// Effects
     useEffect(() => {
         if (!images) {
 			setSelectedError(null);

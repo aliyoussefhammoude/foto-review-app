@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const AlbumsGrid = ({ albums }) => {
 
 	return (
-		<div className="albumContainer">
+		<div >
 			{albums.map(album => (
 				<div key={album.id}>
 						<Link to={`/albums/${album.id}`}>

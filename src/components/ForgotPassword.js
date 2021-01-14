@@ -4,18 +4,13 @@ import { useAuth } from '../contexts/RouteAuth'
 
 const ForgotPassword = () => {
 
-    // States
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState(false)
     const [email, setEmail] = useState("")
     
-    // Contexts
     const { resetPassword } = useAuth()
 
-    // GENERAL FUNCTIONS
-
-    // Handle the submitting of forgotten password
     const handleSubmit = async (e) => {
         e.preventDefault()
 
@@ -42,7 +37,7 @@ const ForgotPassword = () => {
                     <form onSubmit={handleSubmit}>
                         <h1>Reset Password</h1>
                         
-                        <p>Please enter your email address and press send to recieve a link to restore your password</p> 
+                        <p>Please enter your email address and press send then follow instructions</p> 
 
 
                         <div className="inputFields">

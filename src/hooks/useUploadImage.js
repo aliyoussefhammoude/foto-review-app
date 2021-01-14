@@ -5,15 +5,12 @@ import { useAuth } from '../contexts/RouteAuth'
 
 const useUploadImage = (images, albumId = null) => {
 
-	// States
 	const [uploadProgress, setUploadProgress] = useState(null);
 	const [error, setError] = useState(null);
 	const [isSuccess, setIsSuccess] = useState(false);
 	
-	// Contexts
 	const { currentUser } = useAuth()
 
-	// Effects
 	useEffect(() => {
 		if (!images) {
 			setUploadProgress(null);

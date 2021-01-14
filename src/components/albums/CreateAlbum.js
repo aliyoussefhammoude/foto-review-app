@@ -6,31 +6,18 @@ import { useAuth } from '../../contexts/RouteAuth'
 
 const CreateAlbum = () => {
 
-	// States
-	const [error, setError] = useState(false)
-	const [loading, setLoading] = useState(false)
 	const [title, setTitle] = useState("")
-
-	// Hooks
 	const navigate = useNavigate()
-
-	// Contexts
 	const { currentUser } = useAuth()
+	const [, setError] = useState(false)
+	const [, setLoading] = useState(false)
 
-	// GENERAL FUNCTIONS
-
-	// Dynamicly changes the title state
 	const handleTitleChange = (e) => {
 		setTitle(e.target.value)
 	}
 
-	// Submit and create new album
 	const handleSubmit = async (e) => {
 		e.preventDefault()
-
-		if (title.length < 4) {
-			return;
-		}
 
 		setError(false)
 		setLoading(true)

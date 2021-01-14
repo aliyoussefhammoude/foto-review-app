@@ -2,24 +2,21 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/RouteAuth'
 
-const Signup = (props) => {
+const Signup = () => {
 
-    // States
-    const [error, setError] = useState(null)
-    const [loading, setLoading] = useState(false)
+    //Login instructions
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
+
+    //Error and loading systems
+    const [error, setError] = useState(null)
+    const [, setLoading] = useState(false)
     
-    // Hooks
     const navigate = useNavigate()
 
-    // Contexts
     const { signup } = useAuth()
 
-    // GENERAL FUNCTIONS
-
-    // Handle the submitting of signup/registration
     const handleSubmit = async (e) => {
         e.preventDefault()
 
@@ -45,39 +42,15 @@ const Signup = (props) => {
             <div className="loginContainer">
                 <p className="errorMsg">{error}</p> 
                 <form onSubmit={handleSubmit}>
-                    
                 <h1>Create Account</h1>
-
                     <div className="inputFields">
-                    <input 
-                        type="text" 
-                        autoFocus 
-                        required 
-                        value={email} 
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Email..." 
-                    /> 
-                    
-                    <input 
-                        type="password" 
-                        required 
-                        value={password} 
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Password..." 
-                    />
-
-                    <input 
-                        type="password" 
-                        required 
-                        value={confirmPassword} 
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        placeholder="Confirm Password..." 
-                    /> 
-
+                        <input type="text" autoFocus required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email..." /> 
+                        <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password..." />
+                        <input type="password"  required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm Password..."/> 
                     </div>
                     <div className="btnContainer">
                         <div className="btns">
-                        <button disabled={loading}>Sign up</button>
+                        <button>Sign up</button>
                         </div>
                         <p>Already have an account? <Link to="/">Log In</Link></p>
                     </div>

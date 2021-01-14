@@ -1,10 +1,8 @@
 import React from 'react'
 import { Col, Card, Button } from 'react-bootstrap'
 
-const LikedImages = ({likedImages, create, goBack, dislikedImages}) => {
-    console.log(goBack)
-
-    const selectImagesAgain = () => {
+const ImagesReviewed = ({likedImages, create, goBack, dislikedImages}) => {
+    const GoBack = () => {
         goBack()
     }
 
@@ -14,7 +12,7 @@ const LikedImages = ({likedImages, create, goBack, dislikedImages}) => {
 
     return (
         <>
-            <Button onClick={selectImagesAgain}>back</Button>
+            <Button onClick={GoBack}>back</Button>
             <h2>👍</h2>
                 {
                     likedImages.map(image => (
@@ -43,4 +41,4 @@ const LikedImages = ({likedImages, create, goBack, dislikedImages}) => {
     )
 }
 
-export default LikedImages
+export default ImagesReviewed
