@@ -1,14 +1,17 @@
-import React from "react"
-import {useAuth} from "../contexts/AuthContext"
-const Home = () => {
-    const {currentUser, loading} = useAuth()
+import React from 'react'
+import { Link } from 'react-router-dom';
 
-    return loading ? (
-        <p>loading...</p>
-    ) : (
-        <div>
-            <p>this is my home component</p>
-            <p>you are logged in as <strong>{currentUser.uid}</strong></p>
+
+const Home = () => {
+
+    return (
+        <div className="startpage">
+            <h1>PhotoReviewer - A Place To Upload and Review Photos</h1>
+
+            <div>
+                <p>Already have an account?<Link to="/login">Log In</Link></p>
+                <p>Don't have an account?<Link to="/register">Sign up</Link></p>
+            </div>
         </div>
     )
 }

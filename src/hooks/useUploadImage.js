@@ -1,86 +1,109 @@
 import { useState, useEffect } from 'react';
-import { db, storage } from '../firebase';
-import { useAuth } from '../contexts/AuthContext'
+import { db, storage } from '../firebase/firebase';
+import { useAuth } from '../contexts/ContextComp'
 
-const useUploadImage = (image, albumId = null) => {
+
+const useUploadImage = (images, albumId = null) => {
+
+	// States
 	const [uploadProgress, setUploadProgress] = useState(null);
-	const [uploadedImage, setUploadedImage] = useState(null);
 	const [error, setError] = useState(null);
 	const [isSuccess, setIsSuccess] = useState(false);
+	
+	// Contexts
 	const { currentUser } = useAuth()
 
+	// Effects
 	useEffect(() => {
-		if (!image) {
+		if (!images) {
 			setUploadProgress(null);
-			setUploadedImage(null);
 			setError(null);
 			setIsSuccess(false);
 
 			return;
 		}
 
-		// reset environment
 		setError(null);
 		setIsSuccess(false);
 
-		// get file reference
-		const fileRef = storage.ref(`images/${currentUser.uid}/${image.name}`);
 
-		// FUTURE FEATURE: Check if a file with this path already exists and
-		// prepend current timestamp to filename.
+		if (albumId) {
+			
+			images.forEach(image => {
 
-		// upload image to fileRef
-		const uploadTask = fileRef.put(image);
+				const fileRef = storage.ref(`images/${currentUser.uid}/${image.name}`);
+				
+				const generateCode = fileRef.put(image);
+				
+				generateCode.on('state_changed', x => {
+					setUploadProgress(Math.round((x.bytesTransferred / x.totalBytes) * 100));
+				});
+				
+				generateCode.then(async snapshot => {
+		
+					const url = await snapshot.ref.getDownloadURL();
+		
+					const img = {
+						path: snapshot.ref.fullPath,
+						name: image.name,
+						owner: currentUser.uid,
+						type: image.type,
+						size: image.size,
+						url,
+					};
 
-		// attach listener for `state_changed`-event
-		uploadTask.on('state_changed', taskSnapshot => {
-			setUploadProgress(Math.round((taskSnapshot.bytesTransferred / taskSnapshot.totalBytes) * 100));
-		});
+					let collectedImages
 
-		// are we there yet?
-		uploadTask.then(async snapshot => {
+					await db.collection('albums').doc(albumId).get().then(doc => {
+						const data = doc.data();
+						collectedImages = data.images
+					})
 
-			// retrieve URL to uploaded file
-			const url = await snapshot.ref.getDownloadURL();
+					
+					await db.collection('albums').doc(albumId).update({
+						images: [...collectedImages, img],
+					});
 
-			// add uploaded file to db
-			const img = {
-				check: false,
-				name: image.name,
-				owner: currentUser.uid,
-				path: snapshot.ref.fullPath,
-				size: image.size,
-				type: image.type,
-				url,
-			};
+					setError(false);
+					setIsSuccess(true);
+					setUploadProgress(null);
 
-			// get docRef to album (if set)
-			if (albumId) {
-				img.album = db.collection('albums').doc(albumId)
-			}
-
-			// add image to collection
-			await db.collection('images').add(img)
-
-			// let user know we're done
-			setIsSuccess(true);
-			setUploadProgress(null);
-
-			// file has been added to db, refresh list of files
-			setUploadedImage(img);
-			setIsSuccess(true);
-
-		}).catch(error => {
-			console.error("File upload triggered an error!", error);
-			setError({
-				type: "warning",
-				msg: `Image could not be uploaded due to an error (${error.code})`
+				}).catch(error => {
+					setError({
+						type: "warning",
+						msg: error.code
+					});
+				});
 			});
-		});
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [image, currentUser]);
 
-	return { uploadProgress, uploadedImage, error, isSuccess };
+		} else {
+
+			( () => {
+
+				images.forEach(async image => {
+
+				try {
+					await db.collection('albums').add({
+						images: images,
+						title: `FILTERED with ${image.name}` || `FILTERED with image name: ${image[0].name} ..and some others`,
+						owner: currentUser.uid,
+					})
+								
+					setError(false)
+					setIsSuccess(true)
+					setUploadProgress(null)
+
+				} catch (err) {
+					setError(true)
+					setIsSuccess(false)
+					setUploadProgress(null)
+				}})
+			})();
+		}
+			
+	}, [images, currentUser, albumId]);
+
+	return { uploadProgress, error, isSuccess };
 }
 
 export default useUploadImage;

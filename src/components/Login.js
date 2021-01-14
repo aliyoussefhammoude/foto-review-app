@@ -1,68 +1,75 @@
-import React, {useRef, useState} from 'react'
-import {Row, Col, Form, Button, Card, Alert} from 'react-bootstrap'
-import {FormGroup} from 'react-bootstrap'
-import {Link, useNavigate} from 'react-router-dom'
-import {useAuth} from '../contexts/AuthContext'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../contexts/ContextComp'
 
-const Login = () => {
-    const emailRef = useRef()
-    const passwordRef = useRef()
+const Login = (props) => {
+
+    // States
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(false)
-    const {login} = useAuth()
-    const navigate = useNavigate()
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
 
+    // Hooks
+    const navigate = useNavigate()
+    const { login } = useAuth()
+
+    // GENERAL FUNCTIONS
+
+    // Handle the submitting of login
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        setError(null)
+        setError(null);
 
         try {
-            //try log in
             setLoading(true)
-            await login(emailRef.current.value, passwordRef.current.value)
-            navigate('/')
+            await login(email, password)
+            navigate('/albums')
         } catch (e) {
-            setError("couldn't log in, please check your email and password.")
+            setError("Email or password are invalid")
             setLoading(false)
         }
+
     }
 
     return (
-        <>
-            <Row>
-                <Col md={{span: 6, offset: 3}}>
-                    <Card>
-                        <Card.Body>
-                            <Card.Title>Log in</Card.Title>
+        <div className="login">
+            <div className="loginContainer">
+                <p className="errorMsg">{error}</p> 
+                <form onSubmit={handleSubmit}>
+                    
+                    <h1>Log in to create albums to your photos!</h1>
 
-                            {error && (<Alert variant="danger">{error}</Alert>)}
-
-                            <Form onSubmit={handleSubmit}>
-                                <FormGroup id="email">
-                                    <Form.Label>Email</Form.Label>
-                                    <Form.Control type="email" ref={emailRef} required />
-                                </FormGroup>
-                                <FormGroup id="password">
-                                    <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" ref={passwordRef} required />
-                                </FormGroup>
-
-                                <Button disabled={loading} type="sumbit">
-                                    Log In
-                                </Button>
-                            </Form>
-                            <div className='text-right mt-3'>
-                                Forgot Password? <Link to='/forgot-password'>click here</Link>
-                            </div>
-                        </Card.Body>
-                    </Card>
-                    <div className="text-left mt-2 ml-2" >
-                        Don't have an account? <Link to="/signup">Sign up</Link>
+                    <div className="inputFields">
+                        <input 
+                                type="text" 
+                                autoFocus 
+                                required 
+                                value={email} 
+                                onChange={(e) => setEmail(e.target.value)} 
+                                placeholder="Email..."
+                            /> 
+                            
+                            <input 
+                                type="password" 
+                                required 
+                                value={password} 
+                                onChange={(e) => setPassword(e.target.value)} 
+                                placeholder="Password..."
+                            /> 
                     </div>
-                </Col>
-            </Row>
-        </>
+                    
+                    <div className="btnContainer">
+                        <div className="btns">
+                            <button disabled={loading} id="signIn">LOGIN</button>
+                            <Link to="/register"><button disabled={loading}>Sign up</button></Link>
+                        </div>
+                        <p>Forgot your password? <Link to="/reset-password">Click Here</Link></p>
+                    </div>
+                </form>
+            </div>
+        </div>
     )
 }
 

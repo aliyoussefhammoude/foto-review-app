@@ -1,29 +1,25 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import {RotateLoader} from "react-spinners"
-import { useAuth } from '../../contexts/AuthContext'
+import { useAuth } from '../../contexts/ContextComp'
 import useAlbums from '../../hooks/useAlbums'
-import AlbumsGrid from './AlbumsGrid'
+import AllAlbums from './AllAlbums'
+
 
 const Albums = () => {
+	const { albums } = useAlbums()
 	const { currentUser } = useAuth()
-	const { albums, loading } = useAlbums()
 
 	return (
-		<>
-			<h2 className="mb-3">All Albums</h2>
-
+		< >
+			<h2 className="mb-3">My albums:</h2>
+				<AllAlbums albums={albums} />
 			{
-				loading
-					? (<RotateLoader color={"#888"} size={20} />)
-					: (<AlbumsGrid albums={albums} />)
+				currentUser && (
+					<Link to="/albums/create">
+						<button>Create a new Album</button>
+					</Link>
+			)
 			}
-
-			{currentUser && (
-				<div className="mt-3">
-					<Link to="/albums/create" className="btn btn-primary">Create a new Album</Link>
-				</div>
-			)}
 		</>
 	)
 }

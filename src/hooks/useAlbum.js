@@ -1,43 +1,31 @@
 import { useEffect, useState } from 'react';
-import { db } from '../firebase';
+import { db } from '../firebase/firebase';
 
 const useAlbum = (albumId) => {
+
+	// States
 	const [album, setAlbum] = useState();
-	const [images, setImages] = useState([]);
 	const [loading, setLoading] = useState(true);
 
+	// Effects
 	useEffect(() => {
-		db.collection('albums').doc(albumId).get().then(doc => {
+		setLoading(true)
+
+		const unmount = db.collection('albums').doc(albumId).onSnapshot(doc => {
 			setAlbum({
 				id: doc.id,
-				...doc.data(),
+				...doc.data()
 			})
 		})
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+
+		setLoading(false)
+
+		return unmount
+
 	}, [albumId])
 
-	useEffect(() => {
-		const unsubscribe = db.collection('images')
-			.where('album', '==', db.collection('albums').doc(albumId))
-			.orderBy("name")
-			.onSnapshot(snapshot => {
-				setLoading(true);
-				const imgs = [];
 
-				snapshot.forEach(doc => {
-					imgs.push({
-						id: doc.id,
-						...doc.data(),
-					});
-				});
-
-				setImages(imgs);
-				setLoading(false);
-			});
-		return unsubscribe;
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [albumId]);
-	return { album, images, loading };
+	return { album, loading };
 }
 
 export default useAlbum;

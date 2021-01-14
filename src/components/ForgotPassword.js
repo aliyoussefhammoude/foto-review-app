@@ -1,59 +1,85 @@
-import React, {useRef, useState} from 'react'
-import {Row, Col, Form, Button, Card, Alert} from 'react-bootstrap'
-import {FormGroup} from 'react-bootstrap'
-import {Link} from 'react-router-dom'
-import {useAuth} from '../contexts/AuthContext'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { useAuth } from '../contexts/ContextComp'
 
 const ForgotPassword = () => {
-    const emailRef = useRef()
-    const [error, setError] = useState(null)
-    const [message, setMessage] = useState(null)
-    const [loading, setLoading] = useState(false)
-    const {resetPassword} = useAuth()
 
+    // States
+    const [error, setError] = useState(null)
+    const [loading, setLoading] = useState(false)
+    const [success, setSuccess] = useState(false)
+    const [email, setEmail] = useState("")
+    
+    // Contexts
+    const { resetPassword } = useAuth()
+
+    // GENERAL FUNCTIONS
+
+    // Handle the submitting of forgotten password
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        setError(null)
+        setError(null);
 
         try {
-            //try to send a password reset email to the owner of the email
             setLoading(true)
-            await resetPassword(emailRef.current.value)
-            setMessage("Please check your email for further instructions")
+            await resetPassword(email)
+            setSuccess(true)
         } catch (e) {
-            setError("Something went wrong, please check your email address.")
+            setError("Something went wrong, please check if you typed in the right password")
             setLoading(false)
         }
+
     }
 
     return (
-        <>
-            <Row>
-                <Col md={{span: 6, offset: 3}}>
-                    <Card>
-                        <Card.Body>
-                            <Card.Title>Forgot Password</Card.Title>
+        <div className="login">
+            <div className="loginContainer">
+                <p className="errorMsg">{error}</p>
+                { 
+                    !success && 
 
-                            {error && (<Alert variant="danger">{error}</Alert>)}
-                            {message && (<Alert variant="success">{message}</Alert>)}
+                    <form onSubmit={handleSubmit}>
+                        <h1>Reset Password</h1>
+                        
+                        <p>Please enter your email address and press send to recieve a link to restore your password</p> 
 
-                            <Form onSubmit={handleSubmit}>
-                                <FormGroup id="email">
-                                    <Form.Label>Email</Form.Label>
-                                    <Form.Control type="email" ref={emailRef} required />
-                                </FormGroup>
 
-                                <Button disabled={loading} type="sumbit">Reset Password</Button>
-                            </Form>
-                        </Card.Body>
-                        <div className="text-right mb-3 mr-3">
-                            Remembered password? <Link to="/login">Log in</Link>
+                        <div className="inputFields">
+                            
+                            <input 
+                                type="text" 
+                                autoFocus 
+                                required 
+                                value={email} 
+                                onChange={(e) => setEmail(e.target.value)} 
+                                placeholder="Enter your email address..."
+                            /> 
                         </div>
-                    </Card>
-                </Col>
-            </Row>
-        </>
+                        
+                        <div className="btnContainer">
+                            <div className="btns">
+                                <button disabled={loading}>Send</button>
+                            </div>
+                            <p>Back to <Link to="/">Log In</Link></p>
+                        </div>
+                    </form>
+
+                }
+
+                { 
+                    success &&
+
+                    <div>
+                        <div variant="success">
+                            <p>Please check your email for further instructions</p>
+                        </div>
+
+                        <Link to="/" className="text-center mt-2">Log In</Link>
+                    </div> 
+                }
+            </div>
+        </div>
     )
 }
 

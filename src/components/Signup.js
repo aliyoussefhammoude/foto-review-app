@@ -1,73 +1,89 @@
-import React, {useRef, useState} from "react"
-import {Row, Col, Form, Button, Card, Alert} from "react-bootstrap"
-import {FormGroup} from "react-bootstrap"
-import {Link, useNavigate} from "react-router-dom"
-import {useAuth} from "../contexts/AuthContext"
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../contexts/ContextComp'
 
-const Signup = () => {
-    const emailRef = useRef()
-    const passwordRef = useRef()
-    const passwordConfirmRef = useRef()
+const Signup = (props) => {
+
+    // States
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(false)
-    const {signup} = useAuth()
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("")
+    
+    // Hooks
     const navigate = useNavigate()
 
+    // Contexts
+    const { signup } = useAuth()
+
+    // GENERAL FUNCTIONS
+
+    // Handle the submitting of signup/registration
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-            return setError("The passwords does not match")
+        if(password !== confirmPassword) {
+            return setError("The password does not match")
         }
-        setError(null)
+
+        setError(null);
 
         try {
-            //try sign up
             setLoading(true)
-            await signup(emailRef.current.value, passwordRef.current.value)
-            navigate("/")
-        } catch {
+            await signup(email, password)
+            navigate('/albums')
+        } catch (e) {
             setError(e.message)
             setLoading(false)
         }
+
     }
 
     return (
-        <>
-            <Row>
-                <Col md={{span: 6, offset: 3}}>
-                    <Card>
-                        <Card.Body>
-                            <Card.Title>Sign up</Card.Title>
+        <div className="login">
+            <div className="loginContainer">
+                <p className="errorMsg">{error}</p> 
+                <form onSubmit={handleSubmit}>
+                    
+                <h1>Create Account</h1>
 
-                            {error && <Alert variant="danger">{error}</Alert>}
+                    <div className="inputFields">
+                    <input 
+                        type="text" 
+                        autoFocus 
+                        required 
+                        value={email} 
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Email..." 
+                    /> 
+                    
+                    <input 
+                        type="password" 
+                        required 
+                        value={password} 
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Password..." 
+                    />
 
-                            <Form onSubmit={handleSubmit}>
-                                <FormGroup id="email">
-                                    <Form.Label>Email</Form.Label>
-                                    <Form.Control type="email" ref={emailRef} required />
-                                </FormGroup>
-                                <FormGroup id="password">
-                                    <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" ref={passwordRef} required />
-                                </FormGroup>
-                                <FormGroup id="password-confirm">
-                                    <Form.Label>Password Confirm</Form.Label>
-                                    <Form.Control type="password" ref={passwordConfirmRef} required />
-                                </FormGroup>
+                    <input 
+                        type="password" 
+                        required 
+                        value={confirmPassword} 
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        placeholder="Confirm Password..." 
+                    /> 
 
-                                <Button disabled={loading} type="sumbit">
-                                    Create Account
-                                </Button>
-                            </Form>
-                        </Card.Body>
-                    </Card>
-                    <div className="text-center mt-2">
-                        Already have an account? <Link to="/login">Log In</Link>
                     </div>
-                </Col>
-            </Row>
-        </>
+                    <div className="btnContainer">
+                        <div className="btns">
+                        <button disabled={loading}>Sign up</button>
+                        </div>
+                        <p>Already have an account? <Link to="/">Log In</Link></p>
+                    </div>
+                </form>
+            </div>
+        </div>
     )
 }
 

@@ -1,32 +1,35 @@
 import { useEffect, useState } from 'react'
-import { db } from '../firebase'
-import {useAuth} from "../contexts/AuthContext"
+import { db } from '../firebase/firebase'
+import { useAuth } from '../contexts/ContextComp'
 
 const useAlbums = () => {
+
+	// States
 	const [albums, setAlbums] = useState([])
 	const [loading, setLoading] = useState(true)
-	const {currentUser} = useAuth()
-	
-	useEffect(() => { 
-		// register a snapshot-listener on firestore for all available albums
-		const unsubscribe = db.collection('albums')
-			.where('owner', '==', currentUser.uid)
-			.orderBy('title').onSnapshot(snapshot => {
-			setLoading(true)
-			const snapshotAlbums = []
 
-			snapshot.forEach(doc => {
-				snapshotAlbums.push({
-					id: doc.id,
-					...doc.data(),
+	// Contexts
+	const { currentUser } = useAuth()
+
+	// Effects
+	useEffect(() => {
+		const unmount = db.collection('albums')
+			.where('owner', '==', currentUser.uid).onSnapshot(snapshot => {
+				setLoading(true)
+				const renderSnapAlbums = []
+
+				snapshot.forEach(doc => {
+					renderSnapAlbums.push({
+						id: doc.id,
+						...doc.data()
+					})
 				})
-			})
 
-			setAlbums(snapshotAlbums)
+			setAlbums(renderSnapAlbums)
 			setLoading(false)
 		})
 
-		return unsubscribe
+		return unmount
 	}, [])
 
 	return { albums, loading }
