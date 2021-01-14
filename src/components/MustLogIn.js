@@ -2,9 +2,8 @@ import React from 'react'
 import { Navigate, Route } from 'react-router-dom';
 import { useAuth } from '../contexts/ContextComp'
 
-const RestrictedRoute = (props) => {
+const MustLogIn = (props) => {
 
-    // Contexts
     const { currentUser } = useAuth()
 
     return (
@@ -15,4 +14,4 @@ const RestrictedRoute = (props) => {
     )
 }
 
-export default RestrictedRoute
+export default MustLogIn

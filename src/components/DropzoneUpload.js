@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react'
+import React, { useCallback } from 'react'
 import {useDropzone} from 'react-dropzone'
 import { Box } from '@chakra-ui/react'
 

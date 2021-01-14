@@ -10,7 +10,7 @@ import Album from './components/Albums/Album';
 import Albums from './components/Albums/Albums';
 import CustomerAlbum from './components/Albums/CustomerAlbum';
 import CreateNewAlbum from './components/Albums/CreateNewAlbum.js';
-import RestrictedRoute from './components/RestrictedRoute'
+import MustLogIn from './components/MustLogIn'
 import NavigationBar from './components/Navigation.js';
 import NotFound from './components/NotFound.js';
 
@@ -46,20 +46,20 @@ const App = () => {
 									</Route>
 
 									{/* Restricted/Authenticated Components */}
-									<RestrictedRoute path="/albums">
+									<MustLogIn path="/albums">
 
-										<RestrictedRoute path="/">
+										<MustLogIn path="/">
 											<Albums />
-										</RestrictedRoute>
+										</MustLogIn>
 
-										<RestrictedRoute path="/create">
+										<MustLogIn path="/create">
 											<CreateNewAlbum />
-										</RestrictedRoute>
+										</MustLogIn>
 
-										<RestrictedRoute path="/:albumId">
+										<MustLogIn path="/:albumId">
 											<Album />
-										</RestrictedRoute>
-									</RestrictedRoute>
+										</MustLogIn>
+									</MustLogIn>
 
 								
 								{/* Customer Routes */}
