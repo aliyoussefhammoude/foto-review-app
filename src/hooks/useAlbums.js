@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { db } from '../firebase/firebase'
-import { useAuth } from '../contexts/ContextComp'
+import { useAuth } from '../contexts/RouteAuth'
 
 const useAlbums = () => {
 

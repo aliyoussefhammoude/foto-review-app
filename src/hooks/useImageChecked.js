@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { db } from '../firebase/firebase'
 
-const useSelectedImages = (images, owner, title) => {
+const useImageChecked = (images, owner, title) => {
 
 	// States
     const [selectedError, setSelectedError] = useState(false)
@@ -41,4 +41,4 @@ const useSelectedImages = (images, owner, title) => {
     return { selectedError, selectedSuccess }
 }
 
-export default useSelectedImages
+export default useImageChecked

@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { Button } from 'react-bootstrap'
-import AllImages from './AllImages'
+import ImageGrid from './ImageGrid'
 import useAlbum from '../../hooks/useAlbum'
-import UploadImage from './UploadImage'
-import { useAuth } from '../../contexts/ContextComp'
+import ImageUploader from './ImageUploader'
+import { useAuth } from '../../contexts/RouteAuth'
 import {db} from '../../firebase/firebase'
 import { FormControl, FormLabel, Input } from "@chakra-ui/react"
 
@@ -19,7 +19,7 @@ const Album = () => {
 	const { currentUser } = useAuth()
 
 	const handleCostumerLink = () => {
-        setCostumer(`${window.location.href}/123`);
+        setCostumer(`${window.location.href}/*`);
 	};
 
 	const handleTitleChange = (e) => {
@@ -77,9 +77,9 @@ const Album = () => {
 						}	
 						
 						<Link to="/albums">back</Link>
-						<UploadImage albumId={albumId} />
+						<ImageUploader albumId={albumId} />
 						<hr />
-						<AllImages images={album.images} />
+						<ImageGrid images={album.images} />
 
 						{album.images.length > 0 &&
 							<div className="button-wrapper">

@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Row, Col, Card, Button } from 'react-bootstrap'
 import { SRLWrapper } from 'simple-react-lightbox'
-import useSelectedImages from '../../hooks/useSelectedImages';
-import LikedImages from './LikedImages'
+import useImageChecked from '../../hooks/useImageChecked';
+import ImagesReviewed from './ImagesReviewed'
 
-const ImagesForCustomer = ({ images, owner, title }) => {
+const CheckCustomerImages = ({ images, owner, title }) => {
 
 	// States
 	const [likedImages, setLikedImages] = useState([])
@@ -17,7 +17,7 @@ const ImagesForCustomer = ({ images, owner, title }) => {
 	const [reviewSelected, setReviewSelected] = useState(false)
 
 	// Hooks
-	const { selectedError, selectedSuccess } = useSelectedImages(newImageArray, owner, title);
+	const { selectedError, selectedSuccess } = useImageChecked(newImageArray, owner, title);
 	const navigate = useNavigate()
 
 	// Effects
@@ -130,7 +130,7 @@ const ImagesForCustomer = ({ images, owner, title }) => {
 				
 				</>
 			) : (
-				<LikedImages
+				<ImagesReviewed
 				likedImages={likedImages} create={creatAlbum} goBack={handleReview} dislikedImages={dislikedImages}/>
 			)
 		}
@@ -139,4 +139,4 @@ const ImagesForCustomer = ({ images, owner, title }) => {
 	)
 }
 
-export default ImagesForCustomer
+export default CheckCustomerImages

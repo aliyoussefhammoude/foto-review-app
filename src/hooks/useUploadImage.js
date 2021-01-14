@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { db, storage } from '../firebase/firebase';
-import { useAuth } from '../contexts/ContextComp'
+import { useAuth } from '../contexts/RouteAuth'
 
 
 const useUploadImage = (images, albumId = null) => {

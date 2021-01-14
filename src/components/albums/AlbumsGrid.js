@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const AlbumsGrids = ({ albums }) => {
+const AlbumsGrid = ({ albums }) => {
 
 	return (
 		<div className="albumContainer">
@@ -18,4 +18,4 @@ const AlbumsGrids = ({ albums }) => {
 	)
 }
 
-export default AlbumsGrids
+export default AlbumsGrid

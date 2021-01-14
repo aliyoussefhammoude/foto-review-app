@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { db, storage } from '../firebase/firebase';
 import { useParams } from 'react-router-dom'
-import { useAuth } from '../contexts/ContextComp'
+import { useAuth } from '../contexts/RouteAuth'
 
 const useDeleteImage = image => {
 

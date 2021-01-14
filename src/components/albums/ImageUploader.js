@@ -4,7 +4,7 @@ import ProgressBar from 'react-bootstrap/esm/ProgressBar';
 import { useDropzone } from 'react-dropzone';
 import useUploadImage from '../../hooks/useUploadImage';
 
-const UploadImage = ({ albumId }) => {
+const ImageUploader = ({ albumId }) => {
 
 	// States
 	const [uploadImage, setUploadImage] = useState(null);
@@ -63,4 +63,4 @@ const UploadImage = ({ albumId }) => {
 	)
 }
 
-export default UploadImage
+export default ImageUploader

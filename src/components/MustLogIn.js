@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navigate, Route } from 'react-router-dom';
-import { useAuth } from '../contexts/ContextComp'
+import { useAuth } from '../contexts/RouteAuth'
 
 const MustLogIn = (props) => {
 

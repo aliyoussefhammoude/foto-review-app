@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Row, Col, Card, Button } from 'react-bootstrap'
 import { SRLWrapper } from 'simple-react-lightbox'
-import { useAuth } from '../../contexts/ContextComp'
+import { useAuth } from '../../contexts/RouteAuth'
 import useDeleteImage from '../../hooks/useDeleteImage'
 import useUploadImage from '../../hooks/useUploadImage';
 
-const AllImages = ({ images, edit }) => {
+const ImageGrid = ({ images }) => {
 
 	// States
 	const [newImages, setNewImages] = useState([])
@@ -116,4 +116,4 @@ const AllImages = ({ images, edit }) => {
 	)
 }
 
-export default AllImages
+export default ImageGrid

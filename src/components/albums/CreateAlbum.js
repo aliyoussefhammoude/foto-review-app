@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { db } from '../../firebase/firebase'
-import { useAuth } from '../../contexts/ContextComp'
+import { useAuth } from '../../contexts/RouteAuth'
 
-const CreateNewAlbum = () => {
+const CreateAlbum = () => {
 
 	// States
 	const [error, setError] = useState(false)
@@ -71,4 +71,4 @@ const CreateNewAlbum = () => {
 	)
 }
 
-export default CreateNewAlbum
+export default CreateAlbum

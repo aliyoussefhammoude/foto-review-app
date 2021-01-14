@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useAuth } from '../../contexts/ContextComp'
+import { useAuth } from '../../contexts/RouteAuth'
 import useAlbums from '../../hooks/useAlbums'
-import AllAlbums from './AllAlbums'
+import AlbumsGrid from './AlbumsGrid'
 
 
 const Albums = () => {
@@ -12,7 +12,7 @@ const Albums = () => {
 	return (
 		< >
 			<h2 className="mb-3">My albums:</h2>
-				<AllAlbums albums={albums} />
+				<AlbumsGrid albums={albums} />
 			{
 				currentUser && (
 					<Link to="/albums/create">
