@@ -11,8 +11,10 @@
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.6.0",
     "bootstrap": "^4.5.3",
+    "express": "^4.17.1",
     "firebase": "^8.2.1",
     "framer-motion": "^3.2.0",
+    "heroku": "^7.47.7",
     "history": "^5.0.0",
     "node-sass": "^4.14.1",
     "react": "^17.0.1",
@@ -43,7 +45,6 @@
   "engines": {
     "node": "12.x"
   },
-
   "browserslist": {
     "production": [
       ">0.2%",
