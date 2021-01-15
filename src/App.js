@@ -6,10 +6,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Login from './components/Login.js';
 import Signup from './components/Signup';
 import ForgotPassword from './components/ForgotPassword';
-import Album from './components/Albums/Album';
-import Albums from './components/Albums/Albums';
-import CheckCustomer from './components/Albums/CheckCustomer';
-import CreateAlbum from './components/Albums/CreateAlbum.js';
+import Album from './components/albums/Album';
+import Albums from './components/albums/Albums';
+import CheckCustomer from './components/albums/CheckCustomer';
+import CreateAlbum from './components/albums/CreateAlbum.js';
 import MustLogIn from './components/MustLogIn'
 import NavigationBar from './components/Navigation.js';
 import NotFound from './components/NotFound.js';
