@@ -27,7 +27,7 @@ const ImageGrid = ({ images }) => {
 			setNewImageArray(null);
 			navigate('/albums')
 		} 
-	}, [error, isSuccess]);
+	}, [error, isSuccess]); // eslint-disable-line react-hooks/exhaustive-deps
 		
 	const handleDeleteImage = (image) => {
 		setDeleteImage(image);
@@ -64,10 +64,11 @@ const ImageGrid = ({ images }) => {
 		<SRLWrapper>
 			<Row className="my-3">
 				{images.map(image => (
-					<Col sm={6} md={4} lg={3} key={image.id}>
-						<Card className="mb-3 text-center">
-							<a href={image.url} title="Lightbox mode" data-attribute="SRL">
+					<Col sm={6} md={4} lg={3} key={image}>
+						<Card className="mb-3 text-center" >
+							<a  href={image.url} title="Lightbox mode" data-attribute="SRL">
 								<Card.Img variant="top" src={image.url} title={image.name} />
+							</a>
 								{currentUser &&
 									<input
 										className="mt-4"
@@ -77,7 +78,6 @@ const ImageGrid = ({ images }) => {
 										onChange={handleimageCheck}
 									/>
 								}
-							</a>
 							<Card.Body>
 								<Card.Text className="text-center small">
 									{image.name} ({Math.round(image.size/1024)} kb)

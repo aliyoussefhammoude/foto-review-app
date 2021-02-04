@@ -27,7 +27,7 @@ const CheckCustomerImages = ({ images, owner, title }) => {
 			setArrayImg(null);
 			navigate('/')
 		} 
-	}, [selectedError, selectedSuccess]);
+	}, [selectedError, selectedSuccess]); // eslint-disable-line react-hooks/exhaustive-deps
 
 
 	const handleReview = () => {
@@ -35,7 +35,8 @@ const CheckCustomerImages = ({ images, owner, title }) => {
 	}
 		
 	const handleNegativeImages = (e) => {
-		
+
+
 		setImagesNegativeChecked({...ImagesNegativeChecked, [e.target.name] : e.target.checked })
 	
 		if (ImagesNegative.includes(e.target.name)) {
@@ -62,6 +63,7 @@ const CheckCustomerImages = ({ images, owner, title }) => {
 
 
 	const handlePositiveImageCheck = (e) => {
+		
 	
 		setImagesPositiveChecked({...ImagesPositiveChecked, [e.target.name] : e.target.checked })
 	
@@ -75,17 +77,37 @@ const CheckCustomerImages = ({ images, owner, title }) => {
 		setImagesPositive(ImagesPositive);
 	}
 
+
+	const handleCheckP = () => {
+		if (document.getElementById("check1").checked === true){
+			document.getElementById("check2").style.visibility = "hidden";
+			
+		}else if (document.getElementById("check1").checked === false){
+			document.getElementById("check2").style.visibility = "visible";
+		}
+	}
+	const handleCheckN = () => {
+		if (document.getElementById("check2").checked === true){
+			document.getElementById("check1").style.visibility = "hidden";
+			
+		}else if (document.getElementById("check2").checked === false){
+			document.getElementById("check1").style.visibility = "visible";
+		}
+	}
+
+
 	return (
 		<SRLWrapper>
 		<p>{errorText}</p>
 		{
 			!CheckedReview
-			 ? (
+			 ? ( 
 				<>
+				
 					<Row className="my-3">
 						{
 						images.map(image => (
-							<Col sm={6} md={4} lg={3} key={image.id}>
+							<Col sm={6} md={4} lg={3} key={image}>
 								<Card className="mb-3">
 									<a href={image.url} title="View image in lightbox" data-attribute="SRL">
 										<Card.Img variant="top" src={image.url} title={image.name} />
@@ -97,19 +119,23 @@ const CheckCustomerImages = ({ images, owner, title }) => {
 										<label>👍
 											<input
 												type="checkbox"
+												id="check1"
 												name={image.url}
 												checked={ImagesPositiveChecked[image.url]}
 												onChange={handlePositiveImageCheck}
+												onClick={handleCheckP}
 											/>
 										</label>
-										
+										<br></br>
 
 										<label>👎</label>
 										<input
 											type="checkbox"
+											id="check2"
 											name={image.url}
 											checked={ImagesNegativeChecked[image.url]}
 											onChange={handleNegativeImages}
+											onClick={handleCheckN}
 										/>
 
 									</Card.Body>
@@ -120,7 +146,7 @@ const CheckCustomerImages = ({ images, owner, title }) => {
 					
 						{images.length <= ImagesPositive.length + ImagesNegative.length  &&
 						
-							<Button onClick={handleReview}>{console.log(images)}
+							<Button onClick={handleReview}>
 								Review
 							</Button>
 						}

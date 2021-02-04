@@ -27,9 +27,9 @@ const useAlbums = () => {
 		})
 
 		return unSigned
-	}, [])
+	}, []) // eslint-disable-line react-hooks/exhaustive-deps
 
 	return { albums, loading }
-}
+} 
 
 export default useAlbums

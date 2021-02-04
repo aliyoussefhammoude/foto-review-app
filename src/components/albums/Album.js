@@ -13,7 +13,6 @@ const Album = () => {
 	const [constumer, setCostumer] = useState(null)
 	const [albumTitleChange, setalbumTitleChange] = useState(null)
 	const [createTitle, setcreateTitle] = useState(null)
-	const [, setErrorMsg] = useState(false)
 	const { albumId } = useParams()
 	const { album } = useAlbum(albumId)
 	const { currentUser } = useAuth()

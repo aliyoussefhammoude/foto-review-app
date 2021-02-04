@@ -34,7 +34,7 @@ const useDeleteImage = image => {
 				setIsSuccess(false)
 			}
 		})();
-	}, [image]);
+	}, [image]); // eslint-disable-line react-hooks/exhaustive-deps
 
 	return {error, isSuccess}
 }

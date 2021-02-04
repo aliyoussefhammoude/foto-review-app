@@ -23,7 +23,7 @@ const useImageChecked = (images, owner, title) => {
 					owner,
 					title: customersReview,
 					images: images,
-				})
+				}) 
 							
 				setSelectedError(false)
 				setSelectedSuccess(true)
@@ -33,8 +33,8 @@ const useImageChecked = (images, owner, title) => {
 				setSelectedError(true)
 				setSelectedSuccess(false)
 			}
-		})();		
-    }, [images])
+		})();	
+    }, [images]) // eslint-disable-line react-hooks/exhaustive-deps
     
     return { selectedError, selectedSuccess }
 }
