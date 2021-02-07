@@ -7,10 +7,10 @@ const CheckCustomer = () => {
 	const { album} = useAlbum(albumId)
 
 	return (
-		<>	
+		<>	<div class="container">
 			{album && 
 				<>
-					<h1>{album.title}</h1>
+					<h1>Album name: {album.title}</h1>
 					<CheckCustomerImages 
 						images={album.images} 
 						owner={album.owner} 
@@ -18,6 +18,7 @@ const CheckCustomer = () => {
 					/>
 				</>
 			}
+			</div>
 		</>
 	)
 }

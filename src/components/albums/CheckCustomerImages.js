@@ -5,7 +5,7 @@ import useImageChecked from '../../hooks/useImageChecked';
 import ImagesReviewed from './ImagesReviewed'
 import { SRLWrapper } from 'simple-react-lightbox'
 
-const CheckCustomerImages = ({ images, owner, title }) => {
+const CheckCustomerImages = ({ images, owner, title, likedImages, create, dislikedImages }) => {
 
 	const [ArrayImg, setArrayImg] = useState(null)
 	const [errorText, setErrorText] = useState(false)
@@ -35,7 +35,7 @@ const CheckCustomerImages = ({ images, owner, title }) => {
 	}
 		
 	const handleNegativeImages = (e) => {
-
+		
 
 		setImagesNegativeChecked({...ImagesNegativeChecked, [e.target.name] : e.target.checked })
 	
@@ -49,11 +49,11 @@ const CheckCustomerImages = ({ images, owner, title }) => {
 		setImagesNegative(ImagesNegative);
 	}
 
-	const creatAlbum = (checkedImages) => {
+	const creatAlbum = () => {
 		let imagesToSave = []
 
 		images.forEach(imgItem => {
-			if (checkedImages.includes(imgItem.url)) {
+			if (ImagesPositive.includes(imgItem.url)) {
 				imagesToSave.push(imgItem)
 			}
 		})
@@ -78,24 +78,27 @@ const CheckCustomerImages = ({ images, owner, title }) => {
 	}
 
 
-	const handleCheckP = () => {
-		if (document.getElementById("check1").checked === true){
-			document.getElementById("check2").style.visibility = "hidden";
-			
-		}else if (document.getElementById("check1").checked === false){
-			document.getElementById("check2").style.visibility = "visible";
-		}
-	}
-	const handleCheckN = () => {
-		if (document.getElementById("check2").checked === true){
-			document.getElementById("check1").style.visibility = "hidden";
-			
-		}else if (document.getElementById("check2").checked === false){
-			document.getElementById("check1").style.visibility = "visible";
-		}
-	}
+	  const handleCheckP = (e) => {
 
+	  	if (document.getElementById(e.target.name).checked === true){
+	  		document.getElementById(e.target.name + 1).style.visibility = "hidden";
+			
+	  	}else if (document.getElementById(e.target.name).checked === false){
+	  		document.getElementById(e.target.name + 1).style.visibility = "visible";
+	  	}
+	  }
+	
+	  const handleCheckN = (e) => {
+		
+	  	if (document.getElementById(e.target.name+1).checked === true){
+	  		document.getElementById(e.target.name).style.visibility = "hidden";
+			
+	  	}else if (document.getElementById(e.target.name+1).checked === false){
+	  		document.getElementById(e.target.name).style.visibility = "visible";
+	  	}
+	 }
 
+	 
 	return (
 		<SRLWrapper>
 		<p>{errorText}</p>
@@ -103,7 +106,7 @@ const CheckCustomerImages = ({ images, owner, title }) => {
 			!CheckedReview
 			 ? ( 
 				<>
-				
+				<div className="container" >
 					<Row className="my-3">
 						{
 						images.map(image => (
@@ -116,22 +119,24 @@ const CheckCustomerImages = ({ images, owner, title }) => {
 										<Card.Text className="small">
 											{image.name} ({Math.round(image.size/1024)} kb)
 										</Card.Text>
-										<label>👍
+										<label>👍</label>
+										
 											<input
 												type="checkbox"
-												id="check1"
+												id={image.url}
 												name={image.url}
 												checked={ImagesPositiveChecked[image.url]}
 												onChange={handlePositiveImageCheck}
 												onClick={handleCheckP}
+												
 											/>
-										</label>
+										
 										<br></br>
 
 										<label>👎</label>
 										<input
 											type="checkbox"
-											id="check2"
+											id={image.url+1}
 											name={image.url}
 											checked={ImagesNegativeChecked[image.url]}
 											onChange={handleNegativeImages}
@@ -143,18 +148,44 @@ const CheckCustomerImages = ({ images, owner, title }) => {
 							</Col>
 						))}
 					</Row>
+					</div>
 					
-						{images.length <= ImagesPositive.length + ImagesNegative.length  &&
+					<hr></hr><hr></hr><hr></hr>
+					<h1>Here is all your review images</h1>
+            <h2>👍</h2>
+                {
+                    ImagesPositive.map(image => (
+                    <Col sm={6} md={4} lg={3} key={image}>
+                        <Card className="mb-3">
+                                <Card.Img variant="top" src={image} />
+                        </Card>
+                    </Col>
+                ))}
+
+                <hr/>
+
+			
+            <h2>👎</h2>
+                {
+                    ImagesNegative.map(image => (
+                    <Col sm={6} md={4} lg={3} className="kolumn mb-5" key={image}>
+                        <Card className="mb-3">
+                                <Card.Img variant="top" src={image} />
+                        </Card>
+                    </Col>
+                ))}
+                
+				{images.length <= ImagesPositive.length + ImagesNegative.length  &&
 						
-							<Button onClick={handleReview}>
-								Review
-							</Button>
-						}
+						<Button className="knapp mb-5" onClick={creatAlbum}>Done</Button>
+					}
+                
 				
 				</>
 			) : (
 				<ImagesReviewed
 				likedImages={ImagesPositive} create={creatAlbum} goBack={handleReview} dislikedImages={ImagesNegative}/>
+					
 			)
 		}
 			

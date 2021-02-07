@@ -1,9 +1,10 @@
 import React from 'react'
 import { useAuth } from '../contexts/RouteAuth'
-import { NavLink } from 'react-router-dom'
 import { Box, Flex, Spacer, Menu, MenuButton} from "@chakra-ui/react"
+import { NavLink, Link } from 'react-router-dom'
 
 const NavigationBar = () => {
+
 
 	const { logout, currentUser } = useAuth()
 	
@@ -19,13 +20,17 @@ const NavigationBar = () => {
 					{
 						currentUser ? (
 							<>
-								<NavLink className="nav-links" to="/albums" m="5">Album</NavLink>
+								<NavLink className="nav-links mr-5" to="/albums" m="5"><h4>Album</h4></NavLink>
 								<Menu>
-									<MenuButton to="/logout" onClick={handleLogout} >Logout </MenuButton>
+									<MenuButton to="/logout" onClick={handleLogout} className="btn btn-primary">Logout </MenuButton>
 								</Menu>
 							</>
 						) : (
-							console.log("login")
+							<button className="nav-link btn btn-warning">
+								<Link to="/">
+									Login
+								</Link>
+							</button>
 						)
 					}
 				</Box>

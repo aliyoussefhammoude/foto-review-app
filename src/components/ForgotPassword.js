@@ -28,7 +28,7 @@ const ForgotPassword = () => {
     }
 
     return (
-        <div className="login">
+        <div className="login" class="container">
             <div className="loginContainer">
                 <p className="errorMsg">{error}</p>
                 { 
@@ -54,7 +54,7 @@ const ForgotPassword = () => {
                         
                         <div className="btnContainer">
                             <div className="btns">
-                                <button disabled={loading}>Send</button>
+                                <button disabled={loading} class="btn btn-primary">Send</button>
                             </div>
                             <p>Back to <Link to="/">Log In</Link></p>
                         </div>
@@ -64,7 +64,7 @@ const ForgotPassword = () => {
 
                 { 
                     success &&
-
+                    
                     <div>
                         <div variant="success">
                             <p>Please check your email for further instructions</p>

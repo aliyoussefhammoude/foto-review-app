@@ -38,6 +38,7 @@ const Signup = () => {
     }
 
     return (
+        <div class="container" >
         <div className="login">
             <div className="loginContainer">
                 <p className="errorMsg">{error}</p> 
@@ -50,12 +51,13 @@ const Signup = () => {
                     </div>
                     <div className="btnContainer">
                         <div className="btns">
-                        <button>Sign up</button>
+                        <button class="btn btn-primary">Sign up</button>
                         </div>
                         <p>Already have an account? <Link to="/">Log In</Link></p>
                     </div>
                 </form>
             </div>
+        </div>
         </div>
     )
 }

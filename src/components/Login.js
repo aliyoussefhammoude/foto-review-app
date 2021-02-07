@@ -29,6 +29,7 @@ const Login = () => {
     }
 
     return (
+        <div class="container">
         <div className="login">
             <div className="loginContainer">
                 <p className="errorMsg">{error}</p> 
@@ -44,13 +45,14 @@ const Login = () => {
                     
                     <div className="btnContainer">
                         <div className="btns">
-                            <button disabled={loading} id="signIn">LOGIN</button>
-                            <Link to="/register"><button disabled={loading}>Sign up</button></Link>
+                            <button disabled={loading} id="signIn" class="btn btn-primary mr-1 ml-1 mt-3">LOGIN</button>
+                            <Link to="/register"><button disabled={loading} class="btn btn-primary mt-3">Sign up</button></Link>
                         </div>
                         <p>Forgot your password? <Link to="/reset-password">Click Here</Link></p>
                     </div>
                 </form>
             </div>
+        </div>
         </div>
     )
 }

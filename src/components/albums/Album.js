@@ -44,6 +44,7 @@ const Album = () => {
 
 	return (
 		<>
+		<div class="container">
 			{album && currentUser &&
 					<>
 						{
@@ -82,7 +83,8 @@ const Album = () => {
 							</div>
 						}{constumer && <p>{constumer}</p>}		
 					</>
-			}		
+			}	
+			</div>	
 		</>
 	)
 }
