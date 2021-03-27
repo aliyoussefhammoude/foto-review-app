@@ -65,7 +65,6 @@ const ImageGrid = ({ images }) => {
 			<Row className="my-3">
 				{images.map(image => (
 					<Col sm={6} md={4} lg={3} key={image.url}>
-						{console.log(image.url)}
 						<Card className="mb-3 text-center" >
 							<a  href={image.url} title="Lightbox mode" data-attribute="SRL">
 								<Card.Img variant="top" src={image.url} title={image.name} />
