@@ -110,7 +110,7 @@ const CheckCustomerImages = ({ images, owner, title, likedImages, create, dislik
 					<Row className="my-3">
 						{
 						images.map(image => (
-							<Col sm={6} md={4} lg={3} key={image}>
+							<Col sm={6} md={4} lg={3} key={image.url}>
 								<Card className="mb-3">
 									<a href={image.url} title="View image in lightbox" data-attribute="SRL">
 										<Card.Img variant="top" src={image.url} title={image.name} />
@@ -125,7 +125,6 @@ const CheckCustomerImages = ({ images, owner, title, likedImages, create, dislik
 												type="checkbox"
 												id={image.url}
 												name={image.url}
-												checked={ImagesPositiveChecked[image.url]}
 												onChange={handlePositiveImageCheck}
 												onClick={handleCheckP}
 												
@@ -138,7 +137,6 @@ const CheckCustomerImages = ({ images, owner, title, likedImages, create, dislik
 											type="checkbox"
 											id={image.url+1}
 											name={image.url}
-											checked={ImagesNegativeChecked[image.url]}
 											onChange={handleNegativeImages}
 											onClick={handleCheckN}
 										/>

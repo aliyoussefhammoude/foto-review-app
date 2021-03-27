@@ -16,7 +16,7 @@ const ImagesReviewed = ({likedImages, create, goBack, dislikedImages}) => {
             <h2>👍</h2>
                 {
                     likedImages.map(image => (
-                    <Col sm={6} md={4} lg={3} key={image}>
+                    <Col sm={6} md={4} lg={3} key={image.url}>
                         <Card className="mb-3">
                                 <Card.Img variant="top" src={image} />
                         </Card>
@@ -28,7 +28,7 @@ const ImagesReviewed = ({likedImages, create, goBack, dislikedImages}) => {
             <h2>👎</h2>
                 {
                     dislikedImages.map(image => (
-                    <Col sm={6} md={4} lg={3} key={image}>
+                    <Col sm={6} md={4} lg={3} key={image.url}>
                         <Card className="mb-3">
                                 <Card.Img variant="top" src={image} />
                         </Card>
