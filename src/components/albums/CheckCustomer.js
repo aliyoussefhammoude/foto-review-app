@@ -7,7 +7,7 @@ const CheckCustomer = () => {
 	const { album} = useAlbum(albumId)
 
 	return (
-		<>	<div class="container">
+		<>	<div className="container">
 			{album && 
 				<>
 					<h1>Album name: {album.title}</h1>

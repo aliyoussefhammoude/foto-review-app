@@ -44,7 +44,7 @@ const Album = () => {
 
 	return (
 		<>
-		<div class="container">
+		<div className="container">
 			{album && currentUser &&
 					<>
 						{

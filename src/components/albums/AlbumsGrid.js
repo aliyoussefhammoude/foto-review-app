@@ -8,7 +8,7 @@ const AlbumsGrid = ({ albums }) => {
 			{albums.map(album => (
 				<div key={album.id}>
 						<Link to={`/albums/${album.id}`}>
-							<div class="container mt-5"> 
+							<div className="container mt-5"> 
 								<h3>{album.title}</h3> 
 							</div>
 						</Link>

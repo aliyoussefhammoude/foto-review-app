@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 const NotFound = () => {
 	return (
-		<div class="container">
+		<div className="container">
 			<div className="page page__not-found">
 				<h1>404 - ja</h1>				
 
