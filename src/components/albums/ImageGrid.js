@@ -34,17 +34,7 @@ const ImageGrid = ({ images }) => {
 	}
 	useDeleteImage(deleteImage);
 
-	const creatAlbum = (checkedImages) => {
-		let imagesToSave = []
-
-		images.forEach(imgItem => {
-			if (checkedImages.includes(imgItem.url)) {
-				imagesToSave.push(imgItem)
-			}
-		})
-
-		setNewImageArray(imagesToSave)
-	}
+	
 
 	const handleimageCheck = (e) => {
 		
@@ -58,6 +48,17 @@ const ImageGrid = ({ images }) => {
 				newPictures.push(e.target.name)
 			}
 		setnewPictures(newPictures);
+	}
+	const creatAlbum = (checkedImages) => {
+		let imagesToSave = []
+
+		images.forEach(imgItem => {
+			if (checkedImages.includes(imgItem.url)) {
+				imagesToSave.push(imgItem)
+			}
+		})
+
+		setNewImageArray(imagesToSave)
 	}
 
 	return (

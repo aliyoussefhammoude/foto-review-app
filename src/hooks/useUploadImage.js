@@ -75,14 +75,14 @@ const useUploadImage = (images, albumId = null) => {
 
 		} else {
 
-			( () => {
+			(async () => {
 
-				images.forEach(async image => {
+				
 
 				try {
 					await db.collection('albums').add({
 						images: images,
-						title: `FILTERED with ${image.name}` || `FILTERED with image name: ${image[0].name} ..and some others`,
+						title: `FILTERED images`,
 						owner: currentUser.uid,
 					})
 								
@@ -94,7 +94,7 @@ const useUploadImage = (images, albumId = null) => {
 					setError(true)
 					setIsSuccess(false)
 					setUploadProgress(null)
-				}})
+				}
 			})();
 		}
 			
